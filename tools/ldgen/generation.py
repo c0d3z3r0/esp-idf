@@ -81,7 +81,7 @@ class PlacementRule():
             if section in rule.get_section_names():
                 sections_in_obj = sections_infos.get_obj_sections(rule.archive, rule.obj) or []
 
-                expansions = fnmatch.filter(sections_in_obj, section)
+                expansions = fnmatch.filter(sections_in_obj or '', section)
                 return expansions
 
         def remove_section_expansions(rule, section, expansions):
