@@ -79,7 +79,7 @@ class PlacementRule():
         # Utility functions for this method
         def do_section_expansion(rule, section):
             if section in rule.get_section_names():
-                sections_in_obj = sections_infos.get_obj_sections(rule.archive, rule.obj)
+                sections_in_obj = sections_infos.get_obj_sections(rule.archive, rule.obj) or []
 
                 expansions = fnmatch.filter(sections_in_obj, section)
                 return expansions
@@ -590,7 +590,7 @@ class SectionsInfo(dict):
             raise ParseException("Parsing sections info for library " + sections_info_dump.name + " failed. " + p.message)
 
         archive = os.path.basename(results.archive_path)
-        self.sections[archive] = SectionsInfo.__info(sections_info_dump.name, sections_info_dump.read())
+        self.sections[archive] = self.__info(sections_info_dump.name, sections_info_dump.read())
 
     def _get_infos_from_file(self, info):
         # Object file line: '{object}:  file format elf32-xtensa-le'
